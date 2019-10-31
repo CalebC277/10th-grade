@@ -1,0 +1,41 @@
+class RightTriangle(Polygon):
+    def __init__(self, location, a, b):
+        self.location = location
+        self.a = a
+        self.b = b
+        d = (a**2)+(b**2)
+        c = sqrt(d)
+        c = (c//1.0)
+        self.hypotenuse=c
+        point1 = Point(location.x, (location.y+a))
+        point2 = Point((location.x+b), location.y)
+        Polygon.__init__(self, location, point2, point1)
+
+
+class IsoscelesTriangle(RightTriangle):
+    def __init__(self, location, length):
+        RightTriangle.__init__(self, location, length, length)
+
+class IsoscelesTrapezoid(Polygon):
+    def __init__(self, location, length, length2, height):
+        self.length = length
+        self.height = height
+        self.length2 = length2
+
+        leg1 = (length-length2)/2
+        point2 = Point(location.x+length, location.y)
+        point3 = Point(point2.x-leg1, location.y+height)
+        point4 = Point(location.x+leg1, location.y+height)
+        Polygon.__init__(self, location, point2, point3, point4)
+win = GraphWin()
+tri2 = IsoscelesTriangle(Point(10, 10), 90)
+triangle = RightTriangle(Point(10, 10), 50, 90)
+cube = IsoscelesTrapezoid(Point(50, 50), 20, 10, 10)
+triangle.draw(win)
+cube.draw(win)
+win.getMouse()
+tri2.draw(win)
+print(tri2.hypothenuse)
+print(triangle.hypothenuse)
+win.getMouse()
+win.close()
